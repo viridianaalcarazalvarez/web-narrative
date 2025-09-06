@@ -9,100 +9,141 @@
 
             h1 {color: rgba(134, 127, 127, 0.693);}
             p {color: rgb(80, 80, 87);}
+            
+            @keyframes waveBounce {
+                0% { transform: translateY(0px); }
+                25% { transform: translateY(-30px); }
+                50% { transform: translateY(0px); }
+                75% { transform: translateY(15px); }
+                100% { transform: translateY(0px); }
+            }
+            
+            .wave {
+                animation: waveBounce 2s ease-in-out infinite;
+            }
             .div1 {
                 background-color: rgb(154, 152, 152);
                 position: absolute;
-                top: 200px;
+                top: 50%;
                 left: 0px;
+                transform: translateY(-50%);
                 width: 200px;
                 height: 200px;
-                border-radius: 50%
+                border-radius: 50%;
+                animation: waveBounce 2s ease-in-out infinite;
+                animation-delay: 0s;
             }
             .div2 {
                 background-color: rgb(0, 0, 0);
                 position: absolute;
-                top: 170px;
-                left: 220px;
+                top: 50%;
+                left: 250px;
+                transform: translateY(-50%);
                 width: 180px;
                 height: 180px;
                 border-radius: 50%;
+                animation: waveBounce 2s ease-in-out infinite;
+                animation-delay: 0.2s;
             }
             .div3 {
                 background-color: rgb(197, 196, 196);
                 position: absolute;
-                top: 150px;
-                left: 420px;
+                top: 50%;
+                left: 480px;
+                transform: translateY(-50%);
                 width: 160px;
                 height: 160px;
                 border-radius: 50%;
+                animation: waveBounce 2s ease-in-out infinite;
+                animation-delay: 0.4s;
             }
             .div4 {
                 background-color: rgb(186, 186, 186);
                 position: absolute;
-                top: 150px;
-                left: 600px;
+                top: 50%;
+                left: 700px;
+                transform: translateY(-50%);
                 width: 140px;
                 height: 140px;
                 border-radius: 50%;
+                animation: waveBounce 2s ease-in-out infinite;
+                animation-delay: 0.6s;
             }
             .div5 {
                 background-color: rgb(0, 0, 0);
                 position: absolute;
-                top: 150px;
-                left: 760px;
+                top: 50%;
+                left: 900px;
+                transform: translateY(-50%);
                 width: 120px;
                 height: 120px;
                 border-radius: 50%;
+                animation: waveBounce 2s ease-in-out infinite;
+                animation-delay: 0.8s;
             }
             .div6 {
                 background-color: rgb(170, 170, 170);
                 position: absolute;
-                top: 150px;
-                left: 900px;
+                top: 50%;
+                left: 1080px;
+                transform: translateY(-50%);
                 width: 100px;
                 height: 100px;
                 border-radius: 50%;
+                animation: waveBounce 2s ease-in-out infinite;
+                animation-delay: 1.0s;
             }
             
 
             .div7 { 
                 background-color: rgb(0, 0, 0);
                 position: absolute;
-                top: 140px;
-                left: 1020px;
+                top: 45%;
+                left: 1250px;
+                transform: translateY(-50%);
                 width: 80px;
                 height: 80px;
                 border-radius: 50%;
+                animation: waveBounce 2s ease-in-out infinite;
+                animation-delay: 1.2s;
             }
 
             .div8 { 
                 background-color: rgb(0, 0, 0);
                 position: absolute;
-                top: 120px;
-                left: 1120px;
+                top: 35%;
+                left: 1400px;
+                transform: translateY(-50%);
                 width: 60px;
                 height: 60px;
                 border-radius: 50%;
+                animation: waveBounce 2s ease-in-out infinite;
+                animation-delay: 1.4s;
             }
 
             .div9 { 
                 background-color: rgb(31, 31, 31);
                 position: absolute;
-                top: 80px;
-                left: 1200px;
+                top: 25%;
+                left: 1520px;
+                transform: translateY(-50%);
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
+                animation: waveBounce 2s ease-in-out infinite;
+                animation-delay: 1.6s;
             }
 
             .div10 { 
                 background-color: rgb(63, 63, 63);
                 position: absolute;
-                top: 20px;
-                left: 1260px;
+                top: 5%;
+                left: 1600px;
                 width: 30px;
                 height: 30px;
                 border-radius: 50%;
+                animation: waveBounce 2s ease-in-out infinite;
+                animation-delay: 1.8s;
             }
 
 
@@ -126,9 +167,11 @@
             </div>
         </a>
 
-        <div class="div3">
-            <p>div3</p>
-        </div>
+        <a href="Page4.html">
+            <div class="div3">
+                <p>div3</p>
+            </div>
+        </a>
 
         <div class="div4">
             <p>div4</p>
