@@ -3,38 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page 2</title>
+    <title>Interactive Piano</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+        
         h1 {
-            color: #333;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            
         }
-        p {
+        
+        .piano-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .piano {
+            display: flex;
+            position: relative;
+            background: #2c3e50;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .white-key {
+            width: 60px;
+            height: 200px;
+            background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid #ddd;
+            border-radius: 0 0 8px 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 10px;
+            font-size: 12px;
             color: #666;
-            line-height: 1.6;
+            transition: all 0.1s ease;
+            position: relative;
+            z-index: 1;
         }
+        
+        .white-key:hover {
+            background: linear-gradient(to bottom, #f0f0f0 0%, #e8e8e8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .white-key:active {
+            transform: translateY(2px);
+            background: linear-gradient(to bottom, #e0e0e0 0%, #d0d0d0 100%);
+        }
+        
+        .black-key {
+            width: 35px;
+            height: 130px;
+            background: linear-gradient(to bottom, #2c3e50 0%, #1a252f 100%);
+            border: 2px solid #1a252f;
+            border-radius: 0 0 6px 6px;
+            cursor: pointer;
+            position: absolute;
+            z-index: 2;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 8px;
+            font-size: 10px;
+            color: #ccc;
+            transition: all 0.1s ease;
+        }
+        
+        .black-key:hover {
+            background: linear-gradient(to bottom, #34495e 0%, #2c3e50 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+        
+        .black-key:active {
+            transform: translateY(1px);
+            background: linear-gradient(to bottom, #1a252f 0%, #0f1419 100%);
+        }
+        
+        /* Black key positions */
+        .black-key:nth-child(2) { left: 45px; }
+        .black-key:nth-child(4) { left: 105px; }
+        .black-key:nth-child(7) { left: 225px; }
+        .black-key:nth-child(9) { left: 285px; }
+        .black-key:nth-child(11) { left: 345px; }
+        
         .back-link {
             display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
+            margin-top: 40px;
+            padding: 15px 30px;
+            background-color: rgba(255,255,255,0.2);
+            color: rgb(101, 101, 101);
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 25px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
+        
         .back-link:hover {
-            background-color: #0056b3;
+            background-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .instructions {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Animated Music Notes */
+        .music-note {
+            position: absolute;
+            font-size: 24px;
+            color: #667eea;
+            pointer-events: none;
+            z-index: 10;
+            animation: floatUp 2s ease-out forwards;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-50px) scale(1.2) rotate(10deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) scale(0.8) rotate(20deg);
+            }
+        }
+        
+        .music-note:nth-child(odd) {
+            animation: floatUpLeft 2s ease-out forwards;
+        }
+        
+        .music-note:nth-child(even) {
+            animation: floatUpRight 2s ease-out forwards;
+        }
+        
+        @keyframes floatUpLeft {
+            0% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-50px) translateX(-20px) scale(1.2) rotate(-10deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) translateX(-40px) scale(0.8) rotate(-20deg);
+            }
+        }
+        
+        @keyframes floatUpRight {
+            0% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-50px) translateX(20px) scale(1.2) rotate(10deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) translateX(40px) scale(0.8) rotate(20deg);
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to Page 2!</h1>
-    <p>You successfully navigated here by clicking on div1 from the main page. This is a simple example of how to create links between HTML pages.</p>
-    <p>You can click the button below to go back to the main page.</p>
-    <a href="index.html" class="back-link">Back to Main Page</a>
+    <h1>relaxing notes always help</h1>
+    <p class="instructions"></p>
+    
+    <div class="piano-container">
+        <div class="piano">
+            <!-- White Keys -->
+            <div class="white-key" data-note="C4">C</div>
+            <div class="white-key" data-note="D4">D</div>
+            <div class="white-key" data-note="E4">E</div>
+            <div class="white-key" data-note="F4">F</div>
+            <div class="white-key" data-note="G4">G</div>
+            <div class="white-key" data-note="A4">A</div>
+            <div class="white-key" data-note="B4">B</div>
+            <div class="white-key" data-note="C5">C</div>
+            
+            <!-- Black Keys -->
+            <div class="black-key" data-note="C#4">C#</div>
+            <div class="black-key" data-note="D#4">D#</div>
+            <div class="black-key" data-note="F#4">F#</div>
+            <div class="black-key" data-note="G#4">G#</div>
+            <div class="black-key" data-note="A#4">A#</div>
+        </div>
+    </div>
+    
+    <a href="index.html" class="back-link">let's go press another button</a>
+
+    <script>
+        // Create audio context for sound generation
+        let audioContext;
+        
+        // Initialize audio context on first user interaction
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+        
+        // Generate a sine wave tone for each note
+        function playNote(frequency, duration = 0.5) {
+            initAudio();
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            oscillator.type = 'sine';
+            
+            // Envelope for smooth sound
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+        
+        // Note frequencies (Hz)
+        const notes = {
+            'C4': 261.63,
+            'C#4': 277.18,
+            'D4': 293.66,
+            'D#4': 311.13,
+            'E4': 329.63,
+            'F4': 349.23,
+            'F#4': 369.99,
+            'G4': 392.00,
+            'G#4': 415.30,
+            'A4': 440.00,
+            'A#4': 466.16,
+            'B4': 493.88,
+            'C5': 523.25
+        };
+        
+        // Create animated music note
+        function createMusicNote(keyElement) {
+            const note = document.createElement('div');
+            note.className = 'music-note';
+            note.innerHTML = '♪';
+            
+            // Get key position
+            const keyRect = keyElement.getBoundingClientRect();
+            const containerRect = document.querySelector('.piano-container').getBoundingClientRect();
+            
+            // Position note above the key
+            note.style.left = (keyRect.left - containerRect.left + keyRect.width / 2) + 'px';
+            note.style.top = (keyRect.top - containerRect.top - 20) + 'px';
+            
+            // Add to container
+            document.querySelector('.piano-container').appendChild(note);
+            
+            // Remove note after animation
+            setTimeout(() => {
+                if (note.parentNode) {
+                    note.parentNode.removeChild(note);
+                }
+            }, 2000);
+        }
+        
+        // Add click event listeners to all keys
+        document.querySelectorAll('.white-key, .black-key').forEach(key => {
+            key.addEventListener('click', function() {
+                const note = this.getAttribute('data-note');
+                const frequency = notes[note];
+                
+                if (frequency) {
+                    playNote(frequency);
+                    
+                    // Visual feedback
+                    this.style.transform = 'translateY(2px)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 100);
+                    
+                    // Create animated music note
+                    createMusicNote(this);
+                }
+            });
+        });
+        
+        // Keyboard support
+        const keyMap = {
+            'a': 'C4', 'w': 'C#4', 's': 'D4', 'e': 'D#4', 'd': 'E4',
+            'f': 'F4', 't': 'F#4', 'g': 'G4', 'y': 'G#4', 'h': 'A4',
+            'u': 'A#4', 'j': 'B4', 'k': 'C5'
+        };
+        
+        document.addEventListener('keydown', function(event) {
+            const note = keyMap[event.key.toLowerCase()];
+            if (note && notes[note]) {
+                playNote(notes[note]);
+                
+                // Visual feedback for keyboard
+                const keyElement = document.querySelector(`[data-note="${note}"]`);
+                if (keyElement) {
+                    keyElement.style.transform = 'translateY(2px)';
+                    setTimeout(() => {
+                        keyElement.style.transform = '';
+                    }, 100);
+                    
+                    // Create animated music note for keyboard input
+                    createMusicNote(keyElement);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
