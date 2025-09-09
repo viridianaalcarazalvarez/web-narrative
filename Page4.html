@@ -3,327 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawing Pad</title>
+    <title>Page 4</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
+            padding: 0;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
-        }
-        
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 2.5em;
-            font-weight: 300;
-        }
-        
-        .drawing-container {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        
-        .toolbar {
-            display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            background: linear-gradient(135deg, #000000 0%, #353535 100%);
+            font-family: 'Courier New', monospace;
         }
         
-        .color-palette {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .color-option {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .color-option:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        .color-option.active {
-            border-color: #2c3e50;
-            transform: scale(1.2);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-        }
-        
-        .brush-size {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .brush-size label {
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        
-        .brush-size input {
-            width: 100px;
-            height: 5px;
-            border-radius: 5px;
-            background: #ddd;
-            outline: none;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-        
-        .brush-size input::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #2c3e50;
-            cursor: pointer;
-        }
-        
-        .controls {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            background: #3498db;
+        .big-text {
+            font-size: 3rem;
+            font-weight: normal;
             color: white;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        .btn.clear {
-            background: #e74c3c;
-        }
-        
-        .btn.download {
-            background: #27ae60;
-        }
-        
-        .canvas-container {
-            border: 3px solid #bdc3c7;
-            border-radius: 15px;
+            text-align: center;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            letter-spacing: 0.1em;
+            line-height: 0.9;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            background: white;
+            white-space: nowrap;
+            border-right: 0.15em solid white;
+            animation: blink-caret 0.75s step-end infinite;
         }
         
-        #drawingCanvas {
-            display: block;
-            cursor: crosshair;
-            background: white;
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: white; }
         }
         
         .back-link {
-            display: inline-block;
-            margin-top: 20px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
             padding: 15px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background-color: rgba(255,255,255,0.2);
+            color: rgb(101, 101, 101);
             text-decoration: none;
             border-radius: 25px;
+            border: 2px solid rgba(255,255,255,0.3);
             transition: all 0.3s ease;
-            font-weight: bold;
+            backdrop-filter: blur(10px);
+            font-size: 1.2rem;
         }
         
         .back-link:hover {
+            background-color: rgba(255,255,255,0.3);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .instructions {
-            color: #7f8c8d;
-            text-align: center;
-            margin-bottom: 20px;
-            font-style: italic;
         }
     </style>
 </head>
 <body>
-    <h1>express yourself through art...</h1>
-    <p class="instructions">Choose a color and start drawing your masterpiece</p>
-    
-    <div class="drawing-container">
-        <div class="toolbar">
-            <div class="color-palette">
-                <div class="color-option active" data-color="#000000" style="background-color: #000000;" title="Black"></div>
-                <div class="color-option" data-color="#e74c3c" style="background-color: #e74c3c;" title="Red"></div>
-                <div class="color-option" data-color="#e67e22" style="background-color: #e67e22;" title="Orange"></div>
-                <div class="color-option" data-color="#f1c40f" style="background-color: #f1c40f;" title="Yellow"></div>
-                <div class="color-option" data-color="#27ae60" style="background-color: #27ae60;" title="Green"></div>
-                <div class="color-option" data-color="#3498db" style="background-color: #3498db;" title="Blue"></div>
-                <div class="color-option" data-color="#9b59b6" style="background-color: #9b59b6;" title="Purple"></div>
-                <div class="color-option" data-color="#e91e63" style="background-color: #e91e63;" title="Pink"></div>
-            </div>
-            
-            <div class="brush-size">
-                <label for="brushSize">Brush Size:</label>
-                <input type="range" id="brushSize" min="1" max="20" value="3">
-                <span id="brushSizeValue">3px</span>
-            </div>
-            
-            <div class="controls">
-                <button class="btn clear" onclick="clearCanvas()">Clear</button>
-                <button class="btn download" onclick="downloadCanvas()">Save</button>
-            </div>
-        </div>
-        
-        <div class="canvas-container">
-            <canvas id="drawingCanvas" width="800" height="500"></canvas>
-        </div>
-    </div>
-    
-    <a href="index.html" class="back-link">let's go press another button</a>
+    <a href="index.html" class="back-link">← Back</a>
+    <div class="big-text" id="typewriter"></div>
 
     <script>
-        const canvas = document.getElementById('drawingCanvas');
-        const ctx = canvas.getContext('2d');
-        const brushSizeSlider = document.getElementById('brushSize');
-        const brushSizeValue = document.getElementById('brushSizeValue');
+        const text = "it's ok to feel lost sometimes.....";
+        const element = document.getElementById('typewriter');
+        let i = 0;
         
-        let isDrawing = false;
-        let currentColor = '#000000';
-        let currentBrushSize = 3;
-        
-        // Set up canvas
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        
-        // Color selection
-        document.querySelectorAll('.color-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelector('.color-option.active').classList.remove('active');
-                this.classList.add('active');
-                currentColor = this.getAttribute('data-color');
-            });
-        });
-        
-        // Brush size
-        brushSizeSlider.addEventListener('input', function() {
-            currentBrushSize = this.value;
-            brushSizeValue.textContent = this.value + 'px';
-        });
-        
-        // Drawing functions
-        function startDrawing(e) {
-            isDrawing = true;
-            draw(e);
-        }
-        
-        function stopDrawing() {
-            isDrawing = false;
-            ctx.beginPath();
-        }
-        
-        function draw(e) {
-            if (!isDrawing) return;
-            
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            ctx.lineWidth = currentBrushSize;
-            ctx.strokeStyle = currentColor;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            
-            ctx.lineTo(x, y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-        }
-        
-        // Mouse events
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mouseout', stopDrawing);
-        
-        // Touch events for mobile
-        canvas.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const mouseEvent = new MouseEvent('mousedown', {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            canvas.dispatchEvent(mouseEvent);
-        });
-        
-        canvas.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const mouseEvent = new MouseEvent('mousemove', {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            canvas.dispatchEvent(mouseEvent);
-        });
-        
-        canvas.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            const mouseEvent = new MouseEvent('mouseup', {});
-            canvas.dispatchEvent(mouseEvent);
-        });
-        
-        // Clear canvas
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-        
-        // Download canvas as image
-        function downloadCanvas() {
-            const link = document.createElement('a');
-            link.download = 'my-drawing.png';
-            link.href = canvas.toDataURL();
-            link.click();
-        }
-        
-        // Prevent scrolling on touch devices
-        document.addEventListener('touchstart', function(e) {
-            if (e.target === canvas) {
-                e.preventDefault();
+        function typeWriter() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100); // Adjust speed here (lower = faster)
             }
-        }, { passive: false });
+        }
         
-        document.addEventListener('touchend', function(e) {
-            if (e.target === canvas) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-        
-        document.addEventListener('touchmove', function(e) {
-            if (e.target === canvas) {
-                e.preventDefault();
-            }
-        }, { passive: false });
+        // Start the typewriter effect when page loads
+        window.addEventListener('load', typeWriter);
     </script>
 </body>
 </html>

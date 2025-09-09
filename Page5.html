@@ -3,38 +3,489 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page 5</title>
+    <title>Mountain with Cow</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #2a2a2a 0%, #d7d7d7 100%);
+            font-family: 'Courier New', monospace;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
-        h1 {
-            color: #333;
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
         }
-        p {
-            color: #666;
-            line-height: 1.6;
+
+        /* Sky and clouds */
+        .sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to bottom, #fcfeff 0%, #8f9191 100%);
         }
+
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.8;
+        }
+
+        .cloud1 {
+            width: 80px;
+            height: 40px;
+            top: 20%;
+            left: 10%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .cloud2 {
+            width: 60px;
+            height: 30px;
+            top: 15%;
+            left: 70%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .cloud3 {
+            width: 100px;
+            height: 50px;
+            top: 25%;
+            left: 50%;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Mountains */
+        .mountain-range {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .mountain {
+            position: relative;
+            background: linear-gradient(to bottom, #6b6b6b 0%, #353535 50%, #000000 100%);
+            border-radius: 50% 50% 0 0;
+        }
+
+        .mountain1 {
+            width: 400px;
+            height: 300px;
+            left: 0px;
+            z-index: 1;
+        }
+
+        .mountain2 {
+            width: 500px;
+            height: 400px;
+            left: 0px;
+            z-index: 2;
+        }
+
+        .mountain3 {
+            width: 400px;
+            height: 280px;
+            left: 0px;
+            z-index: 1;
+        }
+
+        .mountain4 {
+            width: 400px;
+            height: 450px;
+            left: 0px;
+            z-index: 3;
+        }
+
+        /* Cartoon Rooster */
+        .rooster {
+            position: absolute;
+            bottom: 200px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            cursor: grab;
+            transition: transform 0.1s ease;
+        }
+
+        .rooster:active {
+            cursor: grabbing;
+        }
+
+        .rooster.dragging {
+            animation: none;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        .rooster-body {
+            width: 100px;
+            height: 60px;
+            background: #876146;
+            border-radius: 50px;
+            position: relative;
+        }
+
+        .rooster-head {
+            width: 50px;
+            height: 50px;
+            background: #D2B48C;
+            border-radius: 50%;
+            position: absolute;
+            top: -25px;
+            left: 25px;
+        }
+
+        .rooster-comb {
+            width: 30px;
+            height: 20px;
+            background: #911919;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            top: -15px;
+            left: 10px;
+        }
+
+        .rooster-wattle {
+            width: 15px;
+            height: 15px;
+            background: #a12525;
+            border-radius: 50%;
+            position: absolute;
+            top: 15px;
+            left: 17px;
+        }
+
+        .rooster-beak {
+            width: 10px;
+            height: 8px;
+            background: #c9bc71;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            top: 20px;
+            left: 19px;
+            transform: rotate(-7deg);
+        }
+
+        .rooster-eye {
+            width: 8px;
+            height: 8px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 12px;
+            left: 35px;
+        }
+
+        .eye1 { left: 8px; }
+        .eye2 { right: 8px; }
+
+        .rooster-tail {
+            width: 30px;
+            height: 35px;
+            background: #452c1b;
+            border-radius: 50%;
+            position: absolute;
+            right: -3px;
+            top: 25px;
+    
+        }
+
+        .rooster-wing {
+            width: 30px;
+            height: 35px;
+            background: #603c2b;
+            border-radius: 50%;
+            position: absolute;
+            top: 25px;
+            left: 0px;
+        }
+
+        .rooster-leg {
+            width: 6px;
+            height: 20px;
+            background: #c7ba6c;
+            position: absolute;
+            bottom: -20px;
+        }
+
+        .leg1 { left: 30px; }
+        .leg2 { right: 30px; }
+
+        .rooster-foot {
+            width: 20px;
+            height: 10px;
+            background: #c2b152;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -8px;
+            left: -3px;
+        }
+
+        @keyframes roosterBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Grass and details */
+        .grass {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(to top, #444444 0%, #9c9c9c 100%);
+        }
+
+        .grass-blade {
+            position: absolute;
+            width: 2px;
+            height: 15px;
+            background: #32CD32;
+            border-radius: 2px;
+            bottom: 0;
+        }
+
+        .grass-blade:nth-child(1) { left: 10%; transform: rotate(-10deg); }
+        .grass-blade:nth-child(2) { left: 20%; transform: rotate(15deg); }
+        .grass-blade:nth-child(3) { left: 30%; transform: rotate(-5deg); }
+        .grass-blade:nth-child(4) { left: 40%; transform: rotate(20deg); }
+        .grass-blade:nth-child(5) { left: 50%; transform: rotate(-15deg); }
+        .grass-blade:nth-child(6) { left: 60%; transform: rotate(10deg); }
+        .grass-blade:nth-child(7) { left: 70%; transform: rotate(-20deg); }
+        .grass-blade:nth-child(8) { left: 80%; transform: rotate(5deg); }
+        .grass-blade:nth-child(9) { left: 90%; transform: rotate(-10deg); }
+
+        /* Back link */
         .back-link {
-            display: inline-block;
-            margin-top: 20px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
             padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
+            background-color: rgba(255,255,255,0.8);
+            color: #333;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 20px;
+            border: 2px solid rgba(0,0,0,0.2);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 20;
         }
+
         .back-link:hover {
-            background-color: #0056b3;
+            background-color: rgba(255,255,255,1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Title */
+        .title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #333;
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+            z-index: 20;
+            text-align: center;
+            width: 100%;
+            max-width: 90%;
+        }
+
+        .title::after {
+            content: '|';
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { opacity: 0; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to Page 5!</h1>
-    <p>You successfully navigated here by clicking on div4 from the main page.</p>
-    <p>You can click the button below to go back to the main page.</p>
-    <a href="index.html" class="back-link">Back to Main Page</a>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back</a>
+        <h1 class="title">you just have to keep moving no matter how hard it may be</h1>
+        
+        <!-- Sky -->
+        <div class="sky">
+            <div class="cloud cloud1"></div>
+            <div class="cloud cloud2"></div>
+            <div class="cloud cloud3"></div>
+        </div>
+
+        <!-- Mountain Range -->
+        <div class="mountain-range">
+            <div class="mountain mountain1"></div>
+            <div class="mountain mountain2"></div>
+            <div class="mountain mountain3"></div>
+            <div class="mountain mountain4"></div>
+        </div>
+
+        <!-- Cartoon Rooster -->
+        <div class="rooster">
+            <div class="rooster-body">
+                <div class="rooster-wing"></div>
+                <div class="rooster-leg leg1">
+                    <div class="rooster-foot"></div>
+                </div>
+                <div class="rooster-leg leg2">
+                    <div class="rooster-foot"></div>
+                </div>
+                <div class="rooster-tail"></div>
+            </div>
+            <div class="rooster-head">
+                <div class="rooster-comb"></div>
+                <div class="rooster-eye eye1"></div>
+                <div class="rooster-eye eye2"></div>
+                <div class="rooster-wattle"></div>
+                <div class="rooster-beak"></div>
+            </div>
+        </div>
+
+        <!-- Grass -->
+        <div class="grass">
+            <div class="grass-blade"></div>
+            <div class="grass-blade"></div>
+            <div class="grass-blade"></div>
+            <div class="grass-blade"></div>
+            <div class="grass-blade"></div>
+            <div class="grass-blade"></div>
+            <div class="grass-blade"></div>
+            <div class="grass-blade"></div>
+            <div class="grass-blade"></div>
+        </div>
+    </div>
+
+    <script>
+        // Rooster drag functionality
+        const rooster = document.querySelector('.rooster');
+        let isDragging = false;
+        let startX, startY, initialX, initialY;
+
+        // Mouse events
+        rooster.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', endDrag);
+
+        // Touch events for mobile
+        rooster.addEventListener('touchstart', startDragTouch);
+        document.addEventListener('touchmove', dragTouch);
+        document.addEventListener('touchend', endDrag);
+
+        function startDrag(e) {
+            isDragging = true;
+            rooster.classList.add('dragging');
+            
+            // Get initial mouse position
+            startX = e.clientX;
+            startY = e.clientY;
+            
+            // Get initial rooster position
+            const rect = rooster.getBoundingClientRect();
+            initialX = rect.left + rect.width / 2;
+            initialY = rect.top + rect.height / 2;
+            
+            e.preventDefault();
+        }
+
+        function startDragTouch(e) {
+            isDragging = true;
+            rooster.classList.add('dragging');
+            
+            // Get initial touch position
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            
+            // Get initial rooster position
+            const rect = rooster.getBoundingClientRect();
+            initialX = rect.left + rect.width / 2;
+            initialY = rect.top + rect.height / 2;
+            
+            e.preventDefault();
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+            
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+            
+            const newX = initialX + deltaX;
+            const newY = initialY + deltaY;
+            
+            // Convert to percentage for responsive positioning
+            const xPercent = (newX / window.innerWidth) * 100;
+            const yPercent = ((window.innerHeight - newY) / window.innerHeight) * 100;
+            
+            rooster.style.left = xPercent + '%';
+            rooster.style.bottom = yPercent + '%';
+            rooster.style.transform = 'translateX(-50%) translateY(-5px)';
+        }
+
+        function dragTouch(e) {
+            if (!isDragging) return;
+            
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - startX;
+            const deltaY = touch.clientY - startY;
+            
+            const newX = initialX + deltaX;
+            const newY = initialY + deltaY;
+            
+            // Convert to percentage for responsive positioning
+            const xPercent = (newX / window.innerWidth) * 100;
+            const yPercent = ((window.innerHeight - newY) / window.innerHeight) * 100;
+            
+            rooster.style.left = xPercent + '%';
+            rooster.style.bottom = yPercent + '%';
+            rooster.style.transform = 'translateX(-50%) translateY(-5px)';
+            
+            e.preventDefault();
+        }
+
+        function endDrag() {
+            if (!isDragging) return;
+            
+            isDragging = false;
+            rooster.classList.remove('dragging');
+            
+            // Restart the bounce animation after a short delay
+            setTimeout(() => {
+                if (!isDragging) {
+                    rooster.style.animation = 'roosterBounce 3s ease-in-out infinite';
+                }
+            }, 100);
+        }
+
+        // Reset rooster position on double click
+        rooster.addEventListener('dblclick', function() {
+            rooster.style.left = '50%';
+            rooster.style.bottom = '200px';
+            rooster.style.transform = 'translateX(-50%)';
+            rooster.style.animation = 'roosterBounce 3s ease-in-out infinite';
+        });
+    </script>
 </body>
 </html>

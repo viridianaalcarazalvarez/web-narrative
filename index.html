@@ -7,8 +7,27 @@
 
         <style>
 
-            h1 {color: rgba(134, 127, 127, 0.693); font-size: 3em;}
-            p {color: rgb(80, 80, 87);}
+            h1 {
+                color: rgba(134, 127, 127, 0.693); 
+                font-size: 3em; 
+                font-family: 'Courier New', monospace; 
+                font-style: italic;
+                overflow: hidden;
+                border-right: 2px solid rgba(134, 127, 127, 0.693);
+                white-space: nowrap;
+                animation: typewriter 7s steps(20, end), blink-caret 0.75s step-end infinite;
+            }
+
+            @keyframes typewriter {
+                from { width: 0; }
+                to { width: 100%; }
+            }
+
+            @keyframes blink-caret {
+                from, to { border-color: transparent; }
+                50% { border-color: rgba(134, 127, 127, 0.693); }
+            }
+            p {color: rgb(80, 80, 87); font-family: 'Courier New', monospace;}
             
             @keyframes waveBounce {
                 0% { transform: translateY(0px); }
@@ -27,8 +46,8 @@
                 top: 50%;
                 left: 0px;
                 transform: translateY(-50%);
-                width: 200px;
-                height: 200px;
+                width: 300px;
+                height: 300px;
                 border-radius: 50%;
                 animation: waveBounce 2s ease-in-out infinite;
                 animation-delay: 0s;
@@ -37,10 +56,10 @@
                 background-color: rgb(0, 0, 0);
                 position: absolute;
                 top: 50%;
-                left: 250px;
+                left: 350px;
                 transform: translateY(-50%);
-                width: 180px;
-                height: 180px;
+                width: 280px;
+                height: 280px;
                 border-radius: 50%;
                 animation: waveBounce 2s ease-in-out infinite;
                 animation-delay: 0.2s;
@@ -49,10 +68,10 @@
                 background-color: rgb(197, 196, 196);
                 position: absolute;
                 top: 50%;
-                left: 480px;
+                left: 700px;
                 transform: translateY(-50%);
-                width: 160px;
-                height: 160px;
+                width: 260px;
+                height: 260px;
                 border-radius: 50%;
                 animation: waveBounce 2s ease-in-out infinite;
                 animation-delay: 0.4s;
@@ -61,10 +80,10 @@
                 background-color: rgb(186, 186, 186);
                 position: absolute;
                 top: 50%;
-                left: 700px;
+                left: 1050px;
                 transform: translateY(-50%);
-                width: 140px;
-                height: 140px;
+                width: 240px;
+                height: 240px;
                 border-radius: 50%;
                 animation: waveBounce 2s ease-in-out infinite;
                 animation-delay: 0.6s;
@@ -73,77 +92,13 @@
                 background-color: rgb(0, 0, 0);
                 position: absolute;
                 top: 50%;
-                left: 900px;
+                left: 1400px;
                 transform: translateY(-50%);
-                width: 120px;
-                height: 120px;
+                width: 220px;
+                height: 220px;
                 border-radius: 50%;
                 animation: waveBounce 2s ease-in-out infinite;
                 animation-delay: 0.8s;
-            }
-            .div6 {
-                background-color: rgb(170, 170, 170);
-                position: absolute;
-                top: 50%;
-                left: 1080px;
-                transform: translateY(-50%);
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                animation: waveBounce 2s ease-in-out infinite;
-                animation-delay: 1.0s;
-            }
-            
-
-            .div7 { 
-                background-color: rgb(0, 0, 0);
-                position: absolute;
-                top: 45%;
-                left: 1250px;
-                transform: translateY(-50%);
-                width: 80px;
-                height: 80px;
-                border-radius: 50%;
-                animation: waveBounce 2s ease-in-out infinite;
-                animation-delay: 1.2s;
-            }
-
-            .div8 { 
-                background-color: rgb(0, 0, 0);
-                position: absolute;
-                top: 35%;
-                left: 1400px;
-                transform: translateY(-50%);
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                animation: waveBounce 2s ease-in-out infinite;
-                animation-delay: 1.4s;
-            }
-
-            .div9 { 
-                background-color: rgb(31, 31, 31);
-                position: absolute;
-                top: 25%;
-                left: 1520px;
-                transform: translateY(-50%);
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                animation: waveBounce 2s ease-in-out infinite;
-                animation-delay: 1.6s;
-            }
-
-            .div10 { 
-                background-color: rgb(63, 63, 63);
-                position: absolute;
-                top: 5%;
-                left: 1600px;
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                animation: waveBounce 2s ease-in-out infinite;
-                animation-delay: 1.8s;
             }
 
 
@@ -153,56 +108,36 @@
         <h1>feeling lost?</h1>
         <p> </p>
 
-        <a> </a>
 
         <a href="Page2.html">
             <div class="div1">
-                <p>div1</p>
+                <p></p>
             </div>
         </a>
 
         <a href="Page3.html">
             <div class="div2">
-                <p>div2</p>
+                <p></p>
             </div>
         </a>
 
         <a href="Page4.html">
             <div class="div3">
-                <p>div3</p>
+                <p></p>
             </div>
         </a>
 
         <a href="Page5.html">
             <div class="div4">
-                <p>div4</p>
+                <p></p>
             </div>
         </a>
 
+        <a href="Page6.html">
         <div class="div5">
-            <p>div5</p>
+            <p></p>
         </div>
-
-        <div class="div6">
-            <p>div6</p>
-        </div>
-        
-        <div class="div7">
-            <p>div7</p>
-        </div>
-
-        <div class="div8">
-            <p>div8</p>
-        </div>
-
-        <div class="div9">
-            <p>div9</p>
-        </div>
-
-        <div class="div10">
-            <p>div10</p>
-        </div>
-
+        </a>
 
     </body>
 </html>    

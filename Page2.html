@@ -6,7 +6,7 @@
     <title>Page 1</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Courier New', monospace;
             margin: 40px;
             background-color: #ffffff;
         }
@@ -24,15 +24,20 @@
         }
         .back-link {
             display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #626467;
-            color: white;
+            margin-top: 40px;
+            padding: 15px 30px;
+            background-color: rgba(255,255,255,0.2);
+            color: rgb(101, 101, 101);
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 25px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
         .back-link:hover {
-            background-color: #0056b3;
+            background-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
         /* Clock Styles */
@@ -139,6 +144,18 @@
             transform: scale(1.05);
         }
         
+        /* Animated Numbers */
+        .floating-number {
+            position: fixed;
+            font-size: 20px;
+            font-weight: 300;
+            color: #b0b0b0;
+            pointer-events: none;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        
         .clock-numbers {
             position: absolute;
             top: 0;
@@ -180,7 +197,76 @@
         </div>
     </div>
     
-    <p>click below 2 go home</p>
-    <a href="index.html" class="back-link">let's go press another button</a>
+    <p></p>
+    <a href="index.html" class="back-link">← Back</a>
+    <div class="big-text" id="typewriter"></div>
+
+    <script>
+        let hoverInterval;
+        
+        function createFloatingNumber() {
+            const clock = document.querySelector('.clock');
+            const clockRect = clock.getBoundingClientRect();
+            
+            // Random numbers 1-12 (clock numbers)
+            const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+            const randomNumber = numbers[Math.floor(Math.random() * numbers.length)];
+            
+            const floatingNumber = document.createElement('div');
+            floatingNumber.className = 'floating-number';
+            floatingNumber.textContent = randomNumber;
+            
+            // Start from clock center
+            const startX = clockRect.left + clockRect.width/2;
+            const startY = clockRect.top + clockRect.height/2;
+            
+            // Random direction across the whole page
+            const angle = Math.random() * 2 * Math.PI;
+            const distance = 300 + Math.random() * 400; // Float further across the page
+            const endX = startX + Math.cos(angle) * distance;
+            const endY = startY + Math.sin(angle) * distance;
+            
+            floatingNumber.style.left = startX + 'px';
+            floatingNumber.style.top = startY + 'px';
+            floatingNumber.style.opacity = '0';
+            floatingNumber.style.transform = 'scale(0.8) rotate(0deg)';
+            
+            // Add to body for full page coverage
+            document.body.appendChild(floatingNumber);
+            
+            // Fade in and start movement
+            setTimeout(() => {
+                floatingNumber.style.transition = 'all 3s ease-out';
+                floatingNumber.style.opacity = '1';
+                floatingNumber.style.left = endX + 'px';
+                floatingNumber.style.top = endY + 'px';
+                floatingNumber.style.transform = 'scale(1.1) rotate(5deg)';
+            }, 10);
+            
+            // Fade out near the end
+            setTimeout(() => {
+                floatingNumber.style.opacity = '0';
+                floatingNumber.style.transform = 'scale(0.9) rotate(10deg)';
+            }, 2500);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (floatingNumber.parentNode) {
+                    floatingNumber.parentNode.removeChild(floatingNumber);
+                }
+            }, 3000);
+        }
+        
+        // Add hover event listeners
+        document.querySelector('.clock').addEventListener('mouseenter', function() {
+            // Create numbers every 500ms while hovering for more seamless effect
+            hoverInterval = setInterval(createFloatingNumber, 500);
+        });
+        
+        document.querySelector('.clock').addEventListener('mouseleave', function() {
+            // Stop creating numbers when not hovering
+            clearInterval(hoverInterval);
+        });
+    </script>
 </body>
 </html>

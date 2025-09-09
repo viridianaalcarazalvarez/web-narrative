@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Piano</title>
+    <title>Interactive Bird Sounds</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Courier New', monospace;
             margin: 0;
             padding: 40px;
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
@@ -39,24 +39,24 @@
         .piano {
             display: flex;
             position: relative;
-            background: #2c3e50;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: #000000;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
         }
         
         .white-key {
-            width: 60px;
-            height: 200px;
+            width: 80px;
+            height: 280px;
             background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
             border: 2px solid #ddd;
-            border-radius: 0 0 8px 8px;
+            border-radius: 0 0 10px 10px;
             cursor: pointer;
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            padding-bottom: 10px;
-            font-size: 12px;
+            padding-bottom: 15px;
+            font-size: 16px;
             color: #666;
             transition: all 0.1s ease;
             position: relative;
@@ -71,23 +71,23 @@
         
         .white-key:active {
             transform: translateY(2px);
-            background: linear-gradient(to bottom, #e0e0e0 0%, #d0d0d0 100%);
+            background: linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
         }
         
         .black-key {
-            width: 35px;
-            height: 130px;
-            background: linear-gradient(to bottom, #2c3e50 0%, #1a252f 100%);
-            border: 2px solid #1a252f;
-            border-radius: 0 0 6px 6px;
+            width: 45px;
+            height: 180px;
+            background: linear-gradient(to bottom, #444545 0%, #1f2020 100%);
+            border: 2px solid #000000;
+            border-radius: 0 0 8px 8px;
             cursor: pointer;
             position: absolute;
             z-index: 2;
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            padding-bottom: 8px;
-            font-size: 10px;
+            padding-bottom: 12px;
+            font-size: 12px;
             color: #ccc;
             transition: all 0.1s ease;
         }
@@ -104,11 +104,11 @@
         }
         
         /* Black key positions */
-        .black-key:nth-child(2) { left: 45px; }
-        .black-key:nth-child(4) { left: 105px; }
-        .black-key:nth-child(7) { left: 225px; }
-        .black-key:nth-child(9) { left: 285px; }
-        .black-key:nth-child(11) { left: 345px; }
+        .black-key:nth-child(2) { left: 60px; }
+        .black-key:nth-child(4) { left: 140px; }
+        .black-key:nth-child(7) { left: 300px; }
+        .black-key:nth-child(9) { left: 380px; }
+        .black-key:nth-child(11) { left: 460px; }
         
         .back-link {
             display: inline-block;
@@ -137,11 +137,11 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
         
-        /* Animated Music Notes */
-        .music-note {
+        /* Animated Bird Symbols */
+        .bird-symbol {
             position: absolute;
             font-size: 24px;
-            color: #667eea;
+            color: #2d5016;
             pointer-events: none;
             z-index: 10;
             animation: floatUp 2s ease-out forwards;
@@ -162,11 +162,11 @@
             }
         }
         
-        .music-note:nth-child(odd) {
+        .bird-symbol:nth-child(odd) {
             animation: floatUpLeft 2s ease-out forwards;
         }
         
-        .music-note:nth-child(even) {
+        .bird-symbol:nth-child(even) {
             animation: floatUpRight 2s ease-out forwards;
         }
         
@@ -202,7 +202,7 @@
     </style>
 </head>
 <body>
-    <h1>relaxing notes always help</h1>
+    <h1>sounds remind us of time passing</h1>
     <p class="instructions"></p>
     
     <div class="piano-container">
@@ -226,7 +226,8 @@
         </div>
     </div>
     
-    <a href="index.html" class="back-link">let's go press another button</a>
+    <a href="index.html" class="back-link">← Back</a>
+    <div class="big-text" id="typewriter"></div>
 
     <script>
         // Create audio context for sound generation
@@ -239,8 +240,8 @@
             }
         }
         
-        // Generate a sine wave tone for each note
-        function playNote(frequency, duration = 0.5) {
+        // Bird sound functions
+        function playBirdChirp() {
             initAudio();
             
             const oscillator = audioContext.createOscillator();
@@ -249,12 +250,96 @@
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
             
-            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            // Cute bird chirp - sweet, high-pitched with gentle trill
+            oscillator.frequency.setValueAtTime(1400, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(2000, audioContext.currentTime + 0.03);
+            oscillator.frequency.exponentialRampToValueAtTime(1600, audioContext.currentTime + 0.06);
+            oscillator.frequency.exponentialRampToValueAtTime(1800, audioContext.currentTime + 0.09);
+            oscillator.frequency.exponentialRampToValueAtTime(1500, audioContext.currentTime + 0.12);
             oscillator.type = 'sine';
             
-            // Envelope for smooth sound
             gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+            gainNode.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.15);
+        }
+        
+        function playBirdSong() {
+            initAudio();
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            // Adorable bird song - sweet melodic sequence with gentle vibrato
+            oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
+            oscillator.frequency.linearRampToValueAtTime(1200, audioContext.currentTime + 0.15);
+            oscillator.frequency.linearRampToValueAtTime(800, audioContext.currentTime + 0.3);
+            oscillator.frequency.linearRampToValueAtTime(1100, audioContext.currentTime + 0.45);
+            oscillator.frequency.linearRampToValueAtTime(900, audioContext.currentTime + 0.6);
+            oscillator.frequency.linearRampToValueAtTime(1300, audioContext.currentTime + 0.75);
+            oscillator.frequency.linearRampToValueAtTime(950, audioContext.currentTime + 0.9);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.05);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.0);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 1.0);
+        }
+        
+        function playBirdCall() {
+            initAudio();
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            // Charming bird call - sweet medium frequency with gentle trill
+            oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+            oscillator.frequency.linearRampToValueAtTime(750, audioContext.currentTime + 0.08);
+            oscillator.frequency.linearRampToValueAtTime(550, audioContext.currentTime + 0.16);
+            oscillator.frequency.linearRampToValueAtTime(700, audioContext.currentTime + 0.24);
+            oscillator.frequency.linearRampToValueAtTime(500, audioContext.currentTime + 0.32);
+            oscillator.frequency.linearRampToValueAtTime(650, audioContext.currentTime + 0.4);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.08, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.45);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.45);
+        }
+        
+        function playBirdTweet(frequency, duration = 0.35) {
+            initAudio();
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            // Playful bird tweet - sweet frequency with cute warbling
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            oscillator.frequency.linearRampToValueAtTime(frequency * 1.15, audioContext.currentTime + 0.04);
+            oscillator.frequency.linearRampToValueAtTime(frequency * 0.85, audioContext.currentTime + 0.08);
+            oscillator.frequency.linearRampToValueAtTime(frequency * 1.05, audioContext.currentTime + 0.12);
+            oscillator.frequency.linearRampToValueAtTime(frequency * 0.95, audioContext.currentTime + 0.16);
+            oscillator.frequency.linearRampToValueAtTime(frequency * 1.08, audioContext.currentTime + 0.2);
+            oscillator.frequency.linearRampToValueAtTime(frequency, audioContext.currentTime + 0.25);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.15, audioContext.currentTime + 0.01);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
             
             oscillator.start(audioContext.currentTime);
@@ -278,39 +363,48 @@
             'C5': 523.25
         };
         
-        // Create animated music note
-        function createMusicNote(keyElement) {
-            const note = document.createElement('div');
-            note.className = 'music-note';
-            note.innerHTML = '♪';
+        // Create animated bird symbol
+        function createBirdSymbol(keyElement) {
+            const bird = document.createElement('div');
+            bird.className = 'bird-symbol';
+            bird.innerHTML = '🐦';
             
             // Get key position
             const keyRect = keyElement.getBoundingClientRect();
             const containerRect = document.querySelector('.piano-container').getBoundingClientRect();
             
-            // Position note above the key
-            note.style.left = (keyRect.left - containerRect.left + keyRect.width / 2) + 'px';
-            note.style.top = (keyRect.top - containerRect.top - 20) + 'px';
+            // Position bird above the key
+            bird.style.left = (keyRect.left - containerRect.left + keyRect.width / 2) + 'px';
+            bird.style.top = (keyRect.top - containerRect.top - 20) + 'px';
             
             // Add to container
-            document.querySelector('.piano-container').appendChild(note);
+            document.querySelector('.piano-container').appendChild(bird);
             
-            // Remove note after animation
+            // Remove bird after animation
             setTimeout(() => {
-                if (note.parentNode) {
-                    note.parentNode.removeChild(note);
+                if (bird.parentNode) {
+                    bird.parentNode.removeChild(bird);
                 }
             }, 2000);
         }
         
         // Add click event listeners to all keys
-        document.querySelectorAll('.white-key, .black-key').forEach(key => {
+        document.querySelectorAll('.white-key, .black-key').forEach((key, index) => {
             key.addEventListener('click', function() {
                 const note = this.getAttribute('data-note');
                 const frequency = notes[note];
                 
                 if (frequency) {
-                    playNote(frequency);
+                    // Different bird sounds for different keys
+                    if (index === 0 || index === 1) { // C and C#
+                        playBirdChirp();
+                    } else if (index === 2 || index === 3) { // D and D#
+                        playBirdSong();
+                    } else if (index === 4 || index === 5) { // E and F
+                        playBirdCall();
+                    } else {
+                        playBirdTweet(frequency);
+                    }
                     
                     // Visual feedback
                     this.style.transform = 'translateY(2px)';
@@ -318,8 +412,8 @@
                         this.style.transform = '';
                     }, 100);
                     
-                    // Create animated music note
-                    createMusicNote(this);
+                    // Create animated bird symbol
+                    createBirdSymbol(this);
                 }
             });
         });
@@ -334,18 +428,29 @@
         document.addEventListener('keydown', function(event) {
             const note = keyMap[event.key.toLowerCase()];
             if (note && notes[note]) {
-                playNote(notes[note]);
-                
-                // Visual feedback for keyboard
                 const keyElement = document.querySelector(`[data-note="${note}"]`);
                 if (keyElement) {
+                    const keyIndex = Array.from(document.querySelectorAll('.white-key, .black-key')).indexOf(keyElement);
+                    
+                    // Different bird sounds for different keys
+                    if (keyIndex === 0 || keyIndex === 1) { // C and C#
+                        playBirdChirp();
+                    } else if (keyIndex === 2 || keyIndex === 3) { // D and D#
+                        playBirdSong();
+                    } else if (keyIndex === 4 || keyIndex === 5) { // E and F
+                        playBirdCall();
+                    } else {
+                        playBirdTweet(notes[note]);
+                    }
+                    
+                    // Visual feedback for keyboard
                     keyElement.style.transform = 'translateY(2px)';
                     setTimeout(() => {
                         keyElement.style.transform = '';
                     }, 100);
                     
-                    // Create animated music note for keyboard input
-                    createMusicNote(keyElement);
+                    // Create animated bird symbol for keyboard input
+                    createBirdSymbol(keyElement);
                 }
             }
         });
